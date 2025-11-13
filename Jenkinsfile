@@ -7,7 +7,7 @@ pipeline {
     stage("Clone code from GitHub") {
             steps {
                 script {
-                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Git-creds', url: 'https://github.com/Malli120812/Deploy-NodeApp-to-AWS-EKS-using-Jenkins-Pipeline']])
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GITCREDS', url: 'https://github.com/Malli120812/Deploy-NodeApp-to-AWS-EKS-using-Jenkins-Pipeline']])
                 }
             }
         }
@@ -30,8 +30,8 @@ pipeline {
         stage('Deploy Docker Image to DockerHub') {
             steps {
                 script {
-                 withCredentials([string(credentialsId: 'docker-credss', variable: 'docker-credss')]) {
-                    sh 'docker login -u mallikarjuna1208 -p ${docker-credss}'
+                 withCredentials([string(credentialsId: 'DOCKERCREDS', variable: 'DOCKERCREDS')]) {
+                    sh 'docker login -u mallikarjuna1208 -p ${DOCKERCREDS}'
             }
             sh 'docker push mallikarjuna1208/dotnet'
         }
